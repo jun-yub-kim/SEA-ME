@@ -53,6 +53,7 @@ import QtQuick.Window 2.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
+import QtGraphicalEffects 1.0
 import Joe 1.0
 
 Window {
@@ -206,22 +207,118 @@ Window {
                 }
             }
 
-            CircularGauge {
-                id: speedometer
-                value: myLabel.text.split(' ')[12];
+            Item {
+                width : height
+                height : container.height / 2
                 anchors.verticalCenter: parent.verticalCenter
-                maximumValue: 280
-                // We set the width to the height, because the height will always be
-                // the more limited factor. Also, all circular controls letterbox
-                // their contents to ensure that they remain circular. However, we
-                // don't want to extra space on the left and right of our gauges,
-                // because they're laid out horizontally, and that would create
-                // large horizontal gaps between gauges on wide screens.
-                width: height
-                height: container.height * 0.5
+                CircularGauge {
+                    id: speedometer
+                    //value : curentTime.getSeconds();
+                    //value: myLabel.text.split(' ')[12];
+                    value: myLabel.text.split(' ')[0];
+                    anchors.verticalCenter: parent.verticalCenter
+                    maximumValue: 280
+                    // We set the width to the height, because the height will always be
+                    // the more limited factor. Also, all circular controls letterbox
+                    // their contents to ensure that they remain circular. However, we
+                    // don't want to extra space on the left and right of our gauges,
+                    // because they're laid out horizontally, and that would create
+                    // large horizontal gaps between gauges on wide screens.
+                    width: height
+                    height: container.height * 0.5
 
-                style: DashboardGaugeStyle {}
+                    style: DashboardGaugeStyle {}
+                }
+
+
+                Rectangle {
+                    id: decoration_bar;
+                    y: parent.height * 1.06
+                    x : parent.width / 15
+                    width: parent.width * 0.9
+                    height: parent.width / 100
+                    RadialGradient {
+                            anchors.fill: parent
+                            gradient: Gradient {
+                                        GradientStop { position: 0.0; color: "white" }
+                                        GradientStop { position: 0.3; color: "gray" }
+                               }
+                        }
+                }
+
+                Rectangle {
+                    id: prnd;
+                    y: parent.height * 1.15
+                    x : parent.width / 12
+                    width: parent.width
+                    height: 50
+                    color: "transparent"
+                    //color : "green"
+
+
+                    Text {
+                        id: letterP
+                        //color : (myLabel.text == "2") ? "orange" : "gray"
+                        color : (myLabel.text.split(' ')[0] == 2) ? "orange" : "gray"
+                        x : 0
+                        width: parent.width / 4
+                        height: parent.height
+                        text: qsTr("P")
+                        font.pixelSize: parent.height
+                        minimumPointSize: 16
+                        minimumPixelSize: 16
+                        transformOrigin: Item.Center
+                    }
+
+                    Text {
+                        id: letterR
+                        //color : "gray"
+                        //color : "white"
+                        color : (myLabel.text.split(' ')[0] == 3) ? "orange" : "gray"
+                        x : parent.width / 4
+                        width: parent.width / 4
+                        height: parent.height
+                        text: qsTr("R")
+                        font.pixelSize: parent.height
+                        minimumPointSize: 16
+                        minimumPixelSize: 16
+                        transformOrigin: Item.Center
+                    }
+                    Text {
+                        id: letterN
+                        //color : "gray"
+                        //color : "white"
+                        color : (myLabel.text.split(' ')[0] == 4) ? "orange" : "gray"
+                        x : parent.width / 2
+                        width: parent.width / 4
+                        height: parent.height
+                        text: qsTr("N")
+                        font.pixelSize: parent.height
+                        minimumPointSize: 16
+                        minimumPixelSize: 16
+                        transformOrigin: Item.Center
+                    }
+                    Text {
+                        id: letterD
+                        //color : "gray"
+                        //color : "white"
+                        color : (myLabel.text.split(' ')[0] == 5) ? "orange" : "gray"
+                        x : 3 * parent.width / 4
+                        width: parent.width / 4
+                        height: parent.height
+                        text: qsTr("D")
+                        font.pixelSize: parent.height
+                        minimumPointSize: 16
+                        minimumPixelSize: 16
+                        transformOrigin: Item.Center
+                    }
+                }
             }
+
+
+
+
+
 
                 CircularGauge {
                     id: tachometer
@@ -234,16 +331,16 @@ Window {
                     style: TachometerStyle {}
                 }
 //---------------------------------------------------------change below------------------------------------------------
-                CircularGauge {
-                    id: tachometer2
-                    width: height
-                    height: container.height * 0.25 - gaugeRow.spacing
-                    value: myLabel.text;
-                    maximumValue: 8
-                    anchors.verticalCenter: parent.verticalCenter
+                //CircularGauge {
+                  //  id: tachometer2
+                    //width: height
+                   // height: container.height * 0.25 - gaugeRow.spacing
+                    //value: myLabel.text;
+                    //maximumValue: 8
+                    //anchors.verticalCenter: parent.verticalCenter
 
-                    style: TachometerStyle {}
-                }
+         //           style: TachometerStyle {}
+           //     }
 
 
 
