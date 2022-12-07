@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PRND</class>
+ <widget class="QMainWindow" name="PRND">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PRND</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="innerframe">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>110</y>
+      <width>171</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="DButton">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>360</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(119, 118, 123);
+background-color: rgb(192, 191, 188);</string>
+    </property>
+    <property name="text">
+     <string>D</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="NButton">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>250</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(94, 92, 100);
+color: rgb(246, 245, 244);</string>
+    </property>
+    <property name="text">
+     <string>N</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="mainframe">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>70</y>
+      <width>371</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="PButton">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>130</y>
+       <width>81</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(119, 118, 123);
+background-color: rgb(192, 191, 188);</string>
+     </property>
+     <property name="text">
+      <string>P</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="RButton">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>140</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(119, 118, 123);
+background-color: rgb(192, 191, 188);</string>
+    </property>
+    <property name="text">
+     <string>R</string>
+    </property>
+   </widget>
+   <zorder>innerframe</zorder>
+   <zorder>mainframe</zorder>
+   <zorder>DButton</zorder>
+   <zorder>NButton</zorder>
+   <zorder>RButton</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

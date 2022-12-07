@@ -192,19 +192,19 @@ To support speed sensor, RPI and board, I made several structure.
 sudo nano /boot/config.txt
 ```
 
-1. Add the following line at the end of config.txt file
+2. Add the following line at the end of config.txt file
 
 ```jsx
 dtoverlay=seeed-can-fd-hat-v2
 ```
 
-1. Reboot RPI using command
+3. Reboot RPI using command
 
 ```jsx
 sudo reboot
 ```
 
-1. open terminal whe RPI rebooted, and type this.
+4. open terminal whe RPI rebooted, and type this.
 
 Make sure that `Raspberrypi CAN extensionboard` is connected with your Raspberry pi.
 
@@ -231,7 +231,7 @@ open bashrc, and add below line at the end of file
 alias cl='sudo ip link set can1 up type can bitrate 500000'
 ```
 
-1. Install can utills
+5. Install can utills
 
 ```jsx
 sudo apt-get install can-utils
@@ -279,7 +279,7 @@ sudo ip link set can1 down
 
 to shut down.
 
-### 3. GUI in Raspberry pi
+### 2. GUI in Raspberry pi
 
 `Raspberry Pi`
 
@@ -291,43 +291,43 @@ to shut down.
 sudo apt update && sudo apt upgrade && sudo apt dist-upgrade && sudo reboot
 ```
 
-1. Install Xorg
+2. Install Xorg
 
 ```jsx
 sudo apt install xserver-xorg -y
 ```
 
-1. Install Desktop Environment PIXEL
+3. Install Desktop Environment PIXEL
 
 ```jsx
 sudo apt install raspberrypi-ui-mods -y
 ```
 
-1. MATE
+4. MATE
 
 ```jsx
 sudo apt install mate-desktop-environment-core
 ```
 
-1. KDE
+5. KDE
 
 ```jsx
 sudo apt install kde-plasma-desktop -y
 ```
 
-1. LXDE
+6. LXDE
 
 ```jsx
 sudo apt install lxde-core lxappearance -y
 ```
 
-1. XFCE
+7. XFCE
 
 ```jsx
 sudo apt install xfce4 xfce4-terminal -y
 ```
 
-1. Install DIsplay Manage
+8. Install DIsplay Manage
 
 ```jsx
 sudo apt install lightdm -y
@@ -337,7 +337,7 @@ sudo apt install lightdm -y
 
 choice `lightdm`
 
-1. XDRP
+9. XDRP
 
 ```jsx
 sudo apt-get install xrdp
@@ -365,7 +365,7 @@ Now you can see RPI GUI in your laptop.
 
 <img src = "https://user-images.githubusercontent.com/81306023/197857437-ae0f058d-da5d-4335-8c51-13fbb3fbe945.PNG" width="40%" height="40%">
 
-### 2. Cross Compile
+### 3. Cross Compile
 
 `Raspberry Pi`
 
@@ -375,13 +375,13 @@ Now you can see RPI GUI in your laptop.
 sudo nano /etc/apt/sources.list
 ```
 
-1. delete # to activate this code
+2. delete # to activate this code
 
 ```jsx
 deb-src http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi
 ```
 
-1. update and upgrade RPI
+3. update and upgrade RPI
 
 ```jsx
 sudo apt-get update
@@ -389,7 +389,7 @@ sudo apt-get dist-upgrade
 sudo reboot
 ```
 
-1. type this
+4. type this
 
 ```jsx
 which rsync
@@ -408,7 +408,7 @@ so in my case
 joe ALL=NOPASSWD:/usr/bin/rsync
 ```
 
-1. Install requirements for cross compile
+5. Install requirements for cross compile
 
 ```jsx
 sudo apt-get build-dep qt5-qmake
@@ -430,7 +430,7 @@ sudo apt-get build-dep libqt5webkit5
 sudo apt-get install libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 gdbserver
 ```
 
-1. Create Directory for QT
+6. Create Directory for QT
 
 ```jsx
 sudo mkdir /usr/local/qt5.15
@@ -462,7 +462,7 @@ sudo chown -R 1000:1000 ~/rpi
 cd ~/rpi
 ```
 
-1. Download Cross-Compiler to make .exe file run on Raspberry pi
+2. Download Cross-Compiler to make .exe file run on Raspberry pi
 
 ```jsx
 cd ~/rpi/tools
@@ -510,7 +510,7 @@ make
 
 then colidingmice.exe file will made in your ‘colidingmice’ directory
 
-1. open terminal in ‘collidingmice’ directory and send .exe file to your RPI (wireless)
+2. open terminal in ‘collidingmice’ directory and send .exe file to your RPI (wireless)
 
 ```jsx
 scp **filename** **RPIusername**@**RPI_IPaddress**:/home/**RPIusername**
