@@ -92,7 +92,7 @@ Item {
             paintOutlinePath(ctx);
 
             ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
+            ctx.strokeStyle = "white";
             ctx.stroke();
         }
     }

@@ -61,14 +61,25 @@ Window {
     visible: true
     width: 1024
     height: 600
-
-    color: "#161616"
-    title: "Qt Quick Extras Demo"
+    RadialGradient {
+            anchors.fill: parent
+            gradient: Gradient {
+                        GradientStop { position: 0.0005; color: "black" }
+                        GradientStop { position: 0.9; color: "white" }
+                        //GradientStop { position: 0.0005; color: "orange" }
+                        //GradientStop { position: 0.9; color: "purple" }
+               }
+        }
+    color: "#DC143C" //background color
+    title: "Joe's Dashboard"
 
     property date curentTime: new Date()
     property int hour: curentTime.getHours()
     property int minutes: curentTime.getMinutes()
     property int seconds: curentTime.getSeconds()
+    property string curtime : "\n" + curentTime.getHours() + ":" + curentTime.getMinutes() + ":" + curentTime.getSeconds()
+    property int leftturningSignal: (myLabel.text.split(' ')[0] == 5) ? 1 : 0
+    property int rightturningSignal: (myLabel.text.split(' ')[0] == 6) ? 1 : 0
 
     ValueSource {
         id: valueSource
@@ -110,14 +121,12 @@ Window {
         height:30
         color:"white"
         property string allInfo: myLabel.text
-        property variant stringList : allInfo.split(' ')
 
             //curentTime = new Date()
             //print(stringList);
             //print(curentTime.getHours(), ":", curentTime.getMinutes(), ":", curentTime.getSeconds());
 
-
-        text: myLabel.text.split(' ')[1]
+        text: myLabel.text.split(' ')[0]
         wrapMode: Text.WordWrap
         Rectangle{
             anchors.fill: parent
@@ -137,6 +146,7 @@ Window {
         id: container
         width: root.width
         height: Math.min(root.width, root.height)
+
         anchors.verticalCenterOffset: 0
         anchors.horizontalCenterOffset: 0 //height은 root인 window의 height과 width 중 작은 것을 반환한다.
         anchors.centerIn: parent
@@ -153,59 +163,75 @@ Window {
                 height: container.height * 0.1 - gaugeRow.spacing
 
                 direction: Qt.LeftArrow
-                on: valueSource.turnSignal == Qt.LeftArrow //valueSource에 turnSignal값이 나오면, lefArrow 실행
+                on: leftturningSignal ? Qt.LeftArrow : 0//valueSource에 turnSignal값이 나오면, lefArrow 실행
+                //color : (myLabel.text.split(' ')[0] == 1) ? "orange" : "gray"
+                //valueSource.turnSignal == Qt.LeftArrow
             }
 
-            Item {
+
+            // Item {
+                        //     width: height
+                        //     height: container.height * 0.25 - gaugeRow.spacing
+                        //     anchors.verticalCenter: parent.verticalCenter
+                        //     CircularGauge { //DashboardGaugeStyle에 CircularGauge를 정의해두었음, 그 것을 참조하는 코드
+                        //         id: fuelGauge
+                        //         value: myLabel.text.split(' ')[0]
+                        //         maximumValue: 1
+                        //         y: parent.height / 2 - height / 2 - container.height * 0.01
+                        //         width: parent.width
+                        //         height: parent.height * 0.7
+                        //         style: IconGaugeStyle {
+                        //             id: fuelGaugeStyle
+                        //             icon: "qrc:/images/battery-icon.png"
+                        //             minWarningColor: Qt.rgba(0.5, 0, 0, 1)
+                        //             tickmarkLabel: Text {
+                        //                 color: "white"
+                        //                 visible: styleData.value === 0 || styleData.value === 1
+                        //                 font.pixelSize: fuelGaugeStyle.toPixels(0.225)
+                        //                 text: styleData.value === 0 ? "E" : (styleData.value === 1 ? "F" : "")
+                        //             }
+                        //         }
+                        //     }
+
+                        //     CircularGauge {
+                        //         value: valueSource.temperature
+                        //         maximumValue: 1
+                        //         width: parent.width
+                        //         height: parent.height * 0.7
+                        //         y: parent.height / 2 + container.height * 0.01
+
+                        //         style: IconGaugeStyle {
+                        //             id: tempGaugeStyle
+
+                        //             icon: "qrc:/images/temperature-icon.png"
+                        //             maxWarningColor: Qt.rgba(0.5, 0, 0, 1)
+
+                        //             tickmarkLabel: Text {
+                        //                 color: "white"
+                        //                 visible: styleData.value === 0 || styleData.value === 1
+                        //                 font.pixelSize: tempGaugeStyle.toPixels(0.225)
+                        //                 text: styleData.value === 0 ? "C" : (styleData.value === 1 ? "H" : "")
+                        //             }
+                        //         }
+                        //     }
+                        // }\n\n\n\n\n
+
+
+
+
+            CircularGauge {
+                id: tachometer
                 width: height
                 height: container.height * 0.25 - gaugeRow.spacing
+                value: valueSource.rpm
+                maximumValue: 8
                 anchors.verticalCenter: parent.verticalCenter
 
-                CircularGauge { //DashboardGaugeStyle에 CircularGauge를 정의해두었음, 그 것을 참조하는 코드
-                    id: fuelGauge
-                    value: valueSource.fuel
-                    maximumValue: 1
-                    y: parent.height / 2 - height / 2 - container.height * 0.01
-                    width: parent.width
-                    height: parent.height * 0.7
-
-                    style: IconGaugeStyle {
-                        id: fuelGaugeStyle
-
-                        icon: "qrc:/images/fuel-icon.png"
-                        minWarningColor: Qt.rgba(0.5, 0, 0, 1)
-
-                        tickmarkLabel: Text {
-                            color: "white"
-                            visible: styleData.value === 0 || styleData.value === 1
-                            font.pixelSize: fuelGaugeStyle.toPixels(0.225)
-                            text: styleData.value === 0 ? "E" : (styleData.value === 1 ? "F" : "")
-                        }
-                    }
-                }
-
-                CircularGauge {
-                    value: valueSource.temperature
-                    maximumValue: 1
-                    width: parent.width
-                    height: parent.height * 0.7
-                    y: parent.height / 2 + container.height * 0.01
-
-                    style: IconGaugeStyle {
-                        id: tempGaugeStyle
-
-                        icon: "qrc:/images/temperature-icon.png"
-                        maxWarningColor: Qt.rgba(0.5, 0, 0, 1)
-
-                        tickmarkLabel: Text {
-                            color: "white"
-                            visible: styleData.value === 0 || styleData.value === 1
-                            font.pixelSize: tempGaugeStyle.toPixels(0.225)
-                            text: styleData.value === 0 ? "C" : (styleData.value === 1 ? "H" : "")
-                        }
-                    }
-                }
+                style: TachometerStyle {}
             }
+
+
+
 
             Item {
                 width : height
@@ -213,9 +239,12 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 CircularGauge {
                     id: speedometer
-                    //value : curentTime.getSeconds();
+                    value : curentTime.getSeconds();
                     //value: myLabel.text.split(' ')[12];
-                    value: myLabel.text.split(' ')[0];
+                    //value: myLabel.text.split(' ')[2];
+
+
+                    //value : mylabel.text.split(' ')[0] + mylabel.text.split(' ')[1]
                     anchors.verticalCenter: parent.verticalCenter
                     maximumValue: 280
                     // We set the width to the height, because the height will always be
@@ -237,7 +266,7 @@ Window {
                     x : parent.width / 15
                     width: parent.width * 0.9
                     height: parent.width / 100
-                    RadialGradient {
+                    RadialGradient { // PRND gradient bar color change
                             anchors.fill: parent
                             gradient: Gradient {
                                         GradientStop { position: 0.0; color: "white" }
@@ -259,7 +288,7 @@ Window {
                     Text {
                         id: letterP
                         //color : (myLabel.text == "2") ? "orange" : "gray"
-                        color : (myLabel.text.split(' ')[0] == 2) ? "orange" : "gray"
+                        color : (myLabel.text.split(' ')[0] == 1) ? "orange" : "gray"
                         x : 0
                         width: parent.width / 4
                         height: parent.height
@@ -274,7 +303,7 @@ Window {
                         id: letterR
                         //color : "gray"
                         //color : "white"
-                        color : (myLabel.text.split(' ')[0] == 3) ? "orange" : "gray"
+                        color : (myLabel.text.split(' ')[0] == 2) ? "orange" : "gray"
                         x : parent.width / 4
                         width: parent.width / 4
                         height: parent.height
@@ -288,7 +317,7 @@ Window {
                         id: letterN
                         //color : "gray"
                         //color : "white"
-                        color : (myLabel.text.split(' ')[0] == 4) ? "orange" : "gray"
+                        color : (myLabel.text.split(' ')[0] == 3) ? "orange" : "gray"
                         x : parent.width / 2
                         width: parent.width / 4
                         height: parent.height
@@ -302,7 +331,7 @@ Window {
                         id: letterD
                         //color : "gray"
                         //color : "white"
-                        color : (myLabel.text.split(' ')[0] == 5) ? "orange" : "gray"
+                        color : (myLabel.text.split(' ')[0] == 4) ? "orange" : "gray"
                         x : 3 * parent.width / 4
                         width: parent.width / 4
                         height: parent.height
@@ -320,16 +349,51 @@ Window {
 
 
 
-                CircularGauge {
-                    id: tachometer
-                    width: height
-                    height: container.height * 0.25 - gaugeRow.spacing
-                    value: valueSource.rpm
-                    maximumValue: 8
-                    anchors.verticalCenter: parent.verticalCenter
+            Text {
+                id: informationdesk
+                y : parent.height * 0.18
+                width:parent.width * 0.28
+                height:parent.height * 0.7
+                //width:230
+                //height:200
+                color:"white"
+                property string allInfo: myLabel.text
+                wrapMode: Text.WordWrap
 
-                    style: TachometerStyle {}
+                Rectangle{
+                    anchors.fill: parent
+                    border.color: "white"
+                    radius : 5
+                    color:"transparent"
+                    anchors.rightMargin: 10
+                    anchors.bottomMargin: 1
+                    anchors.leftMargin: 0
+                    anchors.topMargin: -1
                 }
+
+                Text{
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text : curtime
+                    color:"orange"
+                }
+
+                Text{
+                    text:"\n\n\n\n  Battery : 76%";
+                    color:"orange"
+                }
+                Text{
+                    anchors.bottomMargin: parent.height * 0.7
+                    text:qsTr("\n\n\n\n\n  Temperature : " + curentTime.getSeconds() + "°C");
+                    color:"orange"
+                }
+                Text{
+
+                    anchors.bottomMargin: parent.height * 70
+                    text:"\n\n\n\n\n\n  Humadity : 30%";
+                    color:"orange"
+                }
+
+            }
 //---------------------------------------------------------change below------------------------------------------------
                 //CircularGauge {
                   //  id: tachometer2
@@ -351,7 +415,9 @@ Window {
                 height: container.height * 0.1 - gaugeRow.spacing
 
                 direction: Qt.RightArrow
-                on: valueSource.turnSignal == Qt.RightArrow
+                //on: myLabel.text.split(' ')[0] == 1;
+                //on : myLabel.text.split(' ')[0] == Qt.RightArrow
+                on: rightturningSignal ? Qt.LeftArrow : 0
             }
 
         }
@@ -363,7 +429,10 @@ Window {
         running:true
         onTriggered:{
             curentTime = new Date()
-            //print(curentTime.getHours(), ":", curentTime.getMinutes(), ":", curentTime.getSeconds());
+            // mylabel.text.split(' ')[0] * 100 + mylabel.text.split(' ')[1]
+            // print(mylabel.text.split(' ')[0] + mylabel.text.split(' ')[1]);
+            // print(curentTime.getHours(), ":", curentTime.getMinutes(), ":", curentTime.getSeconds());
         }
     }
+
 }

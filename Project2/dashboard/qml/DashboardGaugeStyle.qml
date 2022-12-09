@@ -84,19 +84,35 @@ CircularGaugeStyle {
         }
 
         ctx.beginPath();
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "background"; //dashboard background color change
         ctx.ellipse(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fill();
 
         ctx.beginPath();
-        ctx.lineWidth = tickmarkInset;
-        ctx.strokeStyle = "black";
+        ctx.lineWidth = tickmarkInset * 9.3; // change width
+        ctx.strokeStyle = "gray"; //dashboard inner border color change
         ctx.arc(xCenter, yCenter, outerRadius - ctx.lineWidth / 2, outerRadius - ctx.lineWidth / 2, 0, Math.PI * 2);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.lineWidth = tickmarkInset / 2;
-        ctx.strokeStyle = "#222";
+        ctx.lineWidth = tickmarkInset * 9.2;
+        ctx.strokeStyle = "black"; //dashboard outer border color chnage
+        ctx.arc(xCenter, yCenter, outerRadius - ctx.lineWidth / 2, outerRadius - ctx.lineWidth / 20, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // ctx.beginPath();
+        // ctx.lineWidth = tickmarkInset * 1.5; // change width
+        // var circlegradient = ctx.createLinearGradient(0, 0, 170, 0);
+        // circlegradient.addColorStop("0", "magenta");
+        // circlegradient.addColorStop("0.5" ,"blue");
+        // circlegradient.addColorStop("1.0", "red");
+        // ctx.strokeStyle = circlegradient; //dashboard inner border color change
+        // ctx.arc(xCenter, yCenter, outerRadius - ctx.lineWidth / 2, outerRadius - ctx.lineWidth / 2, 0, Math.PI * 2);
+        // ctx.stroke();
+
+        ctx.beginPath();
+        ctx.lineWidth = tickmarkInset * 0.5; // change width
+        ctx.strokeStyle = "orange"; //dashboard inner border color change
         ctx.arc(xCenter, yCenter, outerRadius - ctx.lineWidth / 2, outerRadius - ctx.lineWidth / 2, 0, Math.PI * 2);
         ctx.stroke();
 
@@ -106,6 +122,10 @@ CircularGaugeStyle {
         gradient.addColorStop(0.7, Qt.rgba(1, 1, 1, 0.13));
         gradient.addColorStop(1, Qt.rgba(1, 1, 1, 1));
         ctx.fillStyle = gradient;
+
+
+
+
         ctx.arc(xCenter, yCenter, outerRadius - tickmarkInset, outerRadius - tickmarkInset, 0, Math.PI * 2);
         ctx.fill();
     }
@@ -121,7 +141,7 @@ CircularGaugeStyle {
             id: speedText
             font.pixelSize: toPixels(0.3)
             text: kphInt
-            color: "white"
+            color: "orange"
             horizontalAlignment: Text.AlignRight
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.verticalCenter
@@ -131,7 +151,7 @@ CircularGaugeStyle {
         }
         Text {
             text: "km/h"
-            color: "white"
+            color: "orange" // Km/h color
             font.pixelSize: toPixels(0.09)
             anchors.top: speedText.bottom
             anchors.horizontalCenter: parent.horizontalCenter

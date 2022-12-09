@@ -64,7 +64,7 @@ DashboardGaugeStyle {
         implicitWidth: toPixels(0.03)
         antialiasing: true
         implicitHeight: toPixels(0.08)
-        color: styleData.index === 7 || styleData.index === 8 ? Qt.rgba(0.5, 0, 0, 1) : "#c8c8c8"
+        color: styleData.index === 7 || styleData.index === 8 ? Qt.rgba(0.5, 0, 0, 1) : "white" // RPM gauge Graduation color change
     }
 
     minorTickmark: null
@@ -72,7 +72,7 @@ DashboardGaugeStyle {
     tickmarkLabel: Text {
         font.pixelSize: Math.max(6, toPixels(0.12))
         text: styleData.value
-        color: styleData.index === 7 || styleData.index === 8 ? Qt.rgba(0.5, 0, 0, 1) : "#c8c8c8"
+        color: styleData.index === 7 || styleData.index === 8 ? Qt.rgba(0.5, 0, 0, 1) : "white" // RPM gauge text color change
         antialiasing: true
     }
 
@@ -84,7 +84,7 @@ DashboardGaugeStyle {
 
             ctx.beginPath();
             ctx.lineWidth = tachometerStyle.toPixels(0.08);
-            ctx.strokeStyle = Qt.rgba(0.5, 0, 0, 1);
+            ctx.strokeStyle = Qt.rgba(0.5, 0, 0, 1); //change the rpm edge color
             var warningCircumference = maximumValueAngle - minimumValueAngle * 0.1;
             var startAngle = maximumValueAngle - 90;
             ctx.arc(outerRadius, outerRadius,

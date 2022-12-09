@@ -76,7 +76,9 @@ Item {
             return "5";
         }
     }
-    property int turnSignal: gear == "P" && !start ? randomDirection() : -1
+    //property int turnSignal: gear == "P" && !start ? randomDirection() : -1
+    property int turnSignal: (dashboard.myLabel.text.split(' ')[0] == 7) ? 1 : 0
+    //color : (myLabel.text.split(' ')[0] == 1) ? "orange" : "gray"  
     property real temperature: 0.6
     property bool start: true
 //! [0]
