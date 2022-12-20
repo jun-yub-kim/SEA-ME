@@ -81,6 +81,7 @@ Window {
     property int leftturningSignal: (myLabel.text.split(' ')[0] == 5) ? 1 : 0
     property int rightturningSignal: (myLabel.text.split(' ')[0] == 6) ? 1 : 0
 
+
     ValueSource {
         id: valueSource
     }
@@ -100,18 +101,21 @@ Window {
         //onSomeVarChanged: myLabel.text = myClass.getSomeVar()
     //}
 
-    Text {
-        width:30
-        height:30
-        color:"white"
-        text:curentTime.getSeconds();
-        wrapMode: Text.WordWrap
-        Rectangle{
-            anchors.fill: parent
-            border.color: "green"
-            color:"transparent"
-        }
-    }
+    //Text {
+      //  width:300
+        //height:30
+       // color:"white"
+       // text:qsTr(
+       //            myLabel.text.split(' ')[8] + "  9. " + myLabel.text.split(' ')[9] + "  10. " + myLabel.text.split(' ')[10] + " 11. " + myLabel.text.split(' ')[11] + "  12, " + myLabel.text.split(' ')[12]);
+                   //+ "," + myLabel.text.split(' ')[13] + "," + myLabel.text.split(' ')[14] + "," + myLabel.text.split(' ')[15] + "," + myLabel.text.split(' ')[16]);
+        //text:curentTime.getSeconds();
+       // wrapMode: Text.WordWrap
+        //Rectangle{
+          //  anchors.fill: parent
+          //  border.color: "green"
+           // color:"transparent"
+       // }
+   // }
 
     Text {
         id: myLabel
@@ -119,7 +123,7 @@ Window {
         y: 36
         width:30
         height:30
-        color:"white"
+        color: "transparent"
         property string allInfo: myLabel.text
 
             //curentTime = new Date()
@@ -128,15 +132,15 @@ Window {
 
         text: myLabel.text.split(' ')[0]
         wrapMode: Text.WordWrap
-        Rectangle{
-            anchors.fill: parent
-            border.color: "red"
-            color:"transparent"
-            anchors.rightMargin: 0
-            anchors.bottomMargin: 1
-            anchors.leftMargin: 0
-            anchors.topMargin: -1
-        }
+        //Rectangle{
+           // anchors.fill: parent
+            //border.color: "red"
+            //color:"transparent"
+            //anchors.rightMargin: 0
+            //anchors.bottomMargin: 1
+            //anchors.leftMargin: 0
+            //anchors.topMargin: -1
+        //}
     }
 
 
@@ -219,14 +223,16 @@ Window {
 
 
 
-            CircularGauge {
+            CircularGauge { //rpm gauge
                 id: tachometer
                 width: height
                 height: container.height * 0.25 - gaugeRow.spacing
-                value: valueSource.rpm
+                value : (parseInt(myLabel.text.split(' ')[12],16)%5);
+
+                //value: myLabel.text.split(' ')[12];
+                //value: valueSource.rpm
                 maximumValue: 8
                 anchors.verticalCenter: parent.verticalCenter
-
                 style: TachometerStyle {}
             }
 
@@ -239,14 +245,16 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 CircularGauge {
                     id: speedometer
-                    value : curentTime.getSeconds();
-                    //value: myLabel.text.split(' ')[12];
-                    //value: myLabel.text.split(' ')[2];
-
-
-                    //value : mylabel.text.split(' ')[0] + mylabel.text.split(' ')[1]
+                    value: parseInt(myLabel.text.split(' ')[12],16); // hexadecimal to decimal
+                    //value : myLabel.text.split(' ')[12];
                     anchors.verticalCenter: parent.verticalCenter
                     maximumValue: 280
+                    Behavior on value{
+                                    NumberAnimation{
+                                        duration: 1000
+                                        easing: Easing.InOutSine
+                                    }
+                                }
                     // We set the width to the height, because the height will always be
                     // the more limited factor. Also, all circular controls letterbox
                     // their contents to ensure that they remain circular. However, we
@@ -331,7 +339,8 @@ Window {
                         id: letterD
                         //color : "gray"
                         //color : "white"
-                        color : (myLabel.text.split(' ')[0] == 4) ? "orange" : "gray"
+                        color : "orange"
+                        //color : (myLabel.text.split(' ')[0] == 4) ? "orange" : "gray"
                         x : 3 * parent.width / 4
                         width: parent.width / 4
                         height: parent.height
@@ -383,13 +392,14 @@ Window {
                 }
                 Text{
                     anchors.bottomMargin: parent.height * 0.7
-                    text:qsTr("\n\n\n\n\n  Temperature : " + curentTime.getSeconds() + "°C");
+                    text:qsTr("\n\n\n\n\n  Temperature : " + (parseInt(myLabel.text.split(' ')[11],16)) + "°C");
+                    //text:qsTr("\n\n\n\n\n  Temperature : " + curentTime.getMinutes() + "°C");
                     color:"orange"
                 }
                 Text{
-
                     anchors.bottomMargin: parent.height * 70
-                    text:"\n\n\n\n\n\n  Humadity : 30%";
+                    text:qsTr("\n\n\n\n\n\n  Humadity : " + (parseInt(myLabel.text.split(' ')[10],16)) + "%");
+                    //text:"\n\n\n\n\n\n  Humadity : 11%";
                     color:"orange"
                 }
 

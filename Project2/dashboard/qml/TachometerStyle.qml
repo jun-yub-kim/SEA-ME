@@ -64,7 +64,8 @@ DashboardGaugeStyle {
         implicitWidth: toPixels(0.03)
         antialiasing: true
         implicitHeight: toPixels(0.08)
-        color: styleData.index === 7 || styleData.index === 8 ? Qt.rgba(0.5, 0, 0, 1) : "white" // RPM gauge Graduation color change
+        color: styleData.index === 10 || styleData.index === 20 ? Qt.rgba(0.5, 0, 0, 1) : "black"
+        //color: styleData.index === 7 || styleData.index === 8 ? Qt.rgba(0.5, 0, 0, 1) : "white" // RPM gauge Graduation color change
     }
 
     minorTickmark: null
@@ -90,15 +91,18 @@ DashboardGaugeStyle {
             ctx.arc(outerRadius, outerRadius,
                 // Start the line in from the decorations, and account for the width of the line itself.
                 outerRadius - tickmarkInset - ctx.lineWidth / 2,
-                degToRad(startAngle - angleRange / 8 + angleRange * 0.015),
-                degToRad(startAngle - angleRange * 0.015), false);
+                degToRad(startAngle - angleRange * 8),false);
+                //degToRad(startAngle - angleRange / 8 + angleRange * 0.015),
+                //degToRad(startAngle - angleRange * 0.015), false);
             ctx.stroke();
         }
 
         Text {
             id: rpmText
             font.pixelSize: tachometerStyle.toPixels(0.3)
-            text: rpmInt
+            text : (parseInt(myLabel.text.split(' ')[12],16)%5);
+            //text : (myLabel.text.split(' ')[12] % 5);
+            //text: rpmInt //number that represents RPM
             color: "white"
             horizontalAlignment: Text.AlignRight
             anchors.horizontalCenter: parent.horizontalCenter

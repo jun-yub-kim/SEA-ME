@@ -741,6 +741,7 @@ qrc_dashboard.cpp: dashboard.qrc \
 		qml/DashboardGaugeStyle.qml \
 		qml/TachometerStyle.qml \
 		qml/ValueSource.qml \
+		images/battery-icon.png \
 		images/temperature-icon.png \
 		images/fuel-icon.png \
 		fonts/DejaVuSans.ttf

@@ -84,6 +84,8 @@ ChatMainWindow::ChatMainWindow()
     iface = new org::example::chat(QString(), QString(), QDBusConnection::sessionBus(), this);
     //connect(iface, SIGNAL(message(QString,QString)), this, SLOT(messageSlot(QString,QString)));
     QDBusConnection::sessionBus().connect(QString(), QString(), "org.example.chat", "message", this, SLOT(messageSlot(QString,QString)));
+    // If I change only this, It'possible to send data, but can't receive data.
+    // so i think it's connected with XML UI (org.example.chat)
     connect(iface, SIGNAL(action(QString,QString)), this, SLOT(actionSlot(QString,QString)));
 }
 
@@ -162,7 +164,9 @@ NicknameDialog::NicknameDialog(QWidget *parent)
 
 QString ChatMainWindow::getSomeVar()
 {
-    return m_someVar;
+    QString a = m_someVar;
+    return a;
+    //return m_someVar;
 }
 
 QString ChatMainWindow::someVar(){

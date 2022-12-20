@@ -91,11 +91,11 @@ ChatMainWindow::ChatMainWindow()
     QDBusConnection::sessionBus().connect(QString(), QString(), "org.example.chat", "message", this, SLOT(messageSlot(QString,QString)));
     connect(iface, SIGNAL(action(QString,QString)), this, SLOT(actionSlot(QString,QString)));
 
-    NicknameDialog dialog;
-    dialog.cancelButton->setVisible(false);
-    dialog.exec();
-    m_nickname = dialog.nickname->text().trimmed();
-    emit action(m_nickname, QLatin1String("joins the chat"));
+    //NicknameDialog dialog;
+    //dialog.cancelButton->setVisible(false);
+    //dialog.exec();
+    m_nickname = "CAN";
+    //emit action(m_nickname, QLatin1String("joins the chat"));
 }
 
 ChatMainWindow::~ChatMainWindow()
@@ -386,7 +386,7 @@ void MainWindow::processReceivedFrames()
 
         m_ui->receivedMessagesEdit->append(time + flags + view); // I think this is the value
         QDBusMessage canmsg = QDBusMessage::createSignal("/", "org.example.chat", "message");
-        canmsg << view;
+        canmsg << flags << view; //change the value of view, then the message can change
         QDBusConnection::sessionBus().send(canmsg);
     }
 }

@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>fonts/DejaVuSans.ttf</file>
         <file>images/fuel-icon.png</file>
+        <file>images/battery-icon.png</file>
         <file>images/temperature-icon.png</file>
         <file>qml/dashboard.qml</file>
         <file>qml/DashboardGaugeStyle.qml</file>

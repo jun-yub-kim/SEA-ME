@@ -117,6 +117,20 @@ CircularGaugeStyle {
         ctx.stroke();
 
         ctx.beginPath();
+        ctx.lineWidth = tachometerStyle.toPixels(0.08);
+        ctx.strokeStyle = Qt.rgba(0.5, 0, 0, 1); //change the rpm edge color
+        var warningCircumference = maximumValueAngle - minimumValueAngle * 0.1;
+        var startAngle = maximumValueAngle - 90;
+        ctx.arc(outerRadius, outerRadius,
+            // Start the line in from the decorations, and account for the width of the line itself.
+            outerRadius - tickmarkInset - ctx.lineWidth / 2,
+            degToRad(startAngle - angleRange * 8),false);
+            //degToRad(startAngle - angleRange / 8 + angleRange * 0.015),
+            //degToRad(startAngle - angleRange * 0.015), false);
+        ctx.stroke();
+
+
+        ctx.beginPath();
         var gradient = ctx.createRadialGradient(xCenter, yCenter, 0, xCenter, yCenter, outerRadius * 1.5);
         gradient.addColorStop(0, Qt.rgba(1, 1, 1, 0));
         gradient.addColorStop(0.7, Qt.rgba(1, 1, 1, 0.13));
@@ -135,6 +149,7 @@ CircularGaugeStyle {
             var ctx = getContext("2d");
             ctx.reset();
             paintBackground(ctx);
+
         }
 
         Text {
@@ -150,7 +165,7 @@ CircularGaugeStyle {
             readonly property int kphInt: control.value
         }
         Text {
-            text: "km/h"
+            text: "M / 60s"
             color: "orange" // Km/h color
             font.pixelSize: toPixels(0.09)
             anchors.top: speedText.bottom
@@ -176,17 +191,17 @@ CircularGaugeStyle {
             ctx.lineTo(xCenter, yCenter - needleLength);
             ctx.lineTo(xCenter, 0);
             ctx.closePath();
-            ctx.fillStyle = Qt.rgba(0.66, 0, 0, 0.66);
+            ctx.fillStyle = Qt.rgba(0.66, 0, 0, 10);
             ctx.fill();
 
-            ctx.beginPath();
-            ctx.moveTo(xCenter, height)
-            ctx.lineTo(width, height - needleBaseWidth / 2);
-            ctx.lineTo(xCenter + needleTipWidth / 2, 0);
-            ctx.lineTo(xCenter, 0);
-            ctx.closePath();
-            ctx.fillStyle = Qt.lighter(Qt.rgba(0.66, 0, 0, 0.66));
-            ctx.fill();
+            //ctx.beginPath();
+            //ctx.moveTo(xCenter, height)
+            //ctx.lineTo(width, height - needleBaseWidth / 2);
+            //ctx.lineTo(xCenter + needleTipWidth / 2, 0);
+            //ctx.lineTo(xCenter, 0);
+            //ctx.closePath();
+            //ctx.fillStyle = Qt.lighter(Qt.rgba(243, 59, 59, 0.01));
+            //ctx.fill();
         }
     }
 
