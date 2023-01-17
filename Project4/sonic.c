@@ -7,9 +7,23 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
+
+void Mysleep(int a)
+{
+    clock_t start_clk = clock();
+    
+    a--;
+    while(1) {
+        if ((clock() - start_clk) / CLOCKS_PER_SEC > a_second) break;
+        }
+
+}
 
 int main(int argc, char **argv)
 {
+    while(1){
+    
 	printf("**** SRF08 test program ****\n");
 	
 	int fd;														// File descrition
@@ -57,7 +71,8 @@ int main(int argc, char **argv)
 		printf("Light: %u \n",buf[1]);
 		printf("Range was: %u\n",result);
 	}
-	
+	Mysleep(1)
+	}
 	return 0;
 }
 
