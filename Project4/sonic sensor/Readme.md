@@ -1,8 +1,8 @@
 How to operate in RPI?
 
-1. make sonic.c using something like "VIM"
+1. make mysonic.cpp file using something like "VIM"
 
-2. Type gcc sonic.c -o sonic
+2. Type g++ mysonic.cpp -o sonic
 
 3. Type ./sonic
 
