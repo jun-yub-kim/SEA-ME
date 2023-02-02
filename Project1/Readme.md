@@ -1,271 +1,336 @@
-<details markdown="1">
-<summary>9/7</summary>
+# Project 1
 
-## Team  _'Lamborghini'_ made it!_
+First project is to assemble RC car, and make software environment about RPI.
 
-First, Assemble our piracer with wiki guide.
+In SEA:ME we use ‘PiRacer Pro’.
 
-<img src="https://user-images.githubusercontent.com/81483791/188978196-0c487b01-6736-46ed-85b9-2523e3f3639a.png"  width="800" height="600"/>
+@[https://www.waveshare.com/wiki/PiRacer_Pro_AI_Kit](https://www.waveshare.com/wiki/PiRacer_Pro_AI_Kit)
 
-Second, Install Raspberry pi imager to program in to the SD card.
+here is the official wiki, and you can get information about piracer<br><br><br>  
 
-Insert SD card in the laptop, and execute Raspberry pi imager.
-   
-<img src="https://user-images.githubusercontent.com/81483791/188979960-53b5cfd6-bd87-42ee-a382-2fe20cc5a659.png"  width="400" height="300"/>
-- Choose operating system.
-<img src="https://user-images.githubusercontent.com/81483791/188980652-91443fb2-d10d-45b6-9a14-1ca0fe84e210.png"  width="400" height="300"/>
-- Choose storage (our SD card)
-<img src="https://user-images.githubusercontent.com/81483791/188980909-5347dffc-f018-4355-adef-6498aea1b3d0.png"  width="400" height="300"/>
-- Choose advanced options to use SSH, Wifi
-<img src="https://user-images.githubusercontent.com/81483791/188980846-23f2c5a4-dada-4551-a28d-3f662efbe534.png"  width="400" height="300"/>
+# Prepare Hardware
 
-(we can use VNC viewer to SSH)
+[Piracer_pro_ai_kit-en2.pdf](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/dc39372a-09c4-4201-9800-3ec21513daae/Piracer_pro_ai_kit-en2.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230202%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230202T152911Z&X-Amz-Expires=86400&X-Amz-Signature=2973c2c3613f796b436fc0624e0c3e8905978d36dde8a856468eb7e86b56293a&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Piracer_pro_ai_kit-en2.pdf%22&x-id=GetObject)
+<br><br><br>
+# Prepare Software
 
-- Set id, passward for using SSH
-<img src="https://user-images.githubusercontent.com/81483791/188980846-23f2c5a4-dada-4551-a28d-3f662efbe534.png"  width="400" height="300"/>
-- Connect Wifi
-<img src="https://user-images.githubusercontent.com/81483791/188984127-fff097f3-f565-4592-a638-717c0cce14e0.png"  width="400" height="300"/>
-- Choose Wireless LAN country : DE (Germany)
-<img src="https://user-images.githubusercontent.com/81483791/188981256-8ebe1f13-6f3c-4c61-bbc0-2515abd12a57.png"  width="400" height="300"/>
-- Write
+Rpi will be a main computer of our project.
 
-Third, setup workspace with wiki guide.
+To run RPI, first you have to install OS in the RPI board.
 
-Follow guide of Donkeycar.
+Not all the versions are compatible. So you have to download this version 
 
-1. Setup Raspberry pi
+@[https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2021-12-02/2021-12-02-raspios-buster-armhf-lite.zip](https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2021-12-02/2021-12-02-raspios-buster-armhf-lite.zip)
 
-We have problem installing libraries for OpenCV 
+Also you need ‘Imager’ to install OS from .zip file
 
-We can’t install `libqtgui4 libqt4-test`
+@[https://www.raspberrypi.com/software/](https://www.raspberrypi.com/software/) you can download it here.
 
-Because we got this error message.
+1. operate Rasberry Pi Imager.
+2. Choose operating system<br>
 
-**E: Package 'libqtgui4' has no installation candidate**
-
-**E: Unable to locate package libqt4-test**
-
-Also, we have problem installing tensorflow.
-
-For this reason, We did install the other version. (tensorflow-1.9.0)
-
-`pip3 install --upgrade [https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.9.0-py3-none-any.whl](https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.9.0-py3-none-any.whl)`
-
-1. VNC viewer
-
-If we want to use raspberry pi, we needed a moniter.
-
-Each team can’t get one moniter so we connect VNC viewer.
-
-- Download VNC viewer.
-- Install putty
-
-`sudo apt install putty`
-
-`putty —version`
-- Execute putty client.
-<img src="https://user-images.githubusercontent.com/81483791/188981372-11d40a39-0d69-45a7-a3dd-e10887918754.png"  width="400" height="200"/>   
-- Fill IP address & choose SSH.
-<img src="https://user-images.githubusercontent.com/81483791/188981476-e44bca19-8750-4200-a799-ccce8a42eb4d.png"  width="400" height="300"/>
-- Change fonts server:fixed → Ubuntu mono.
-<img src="https://user-images.githubusercontent.com/81483791/188981617-56ff8db4-d28e-4f6d-96ef-1bae3741f3e8.png"  width="400" height="300"/>
-- Login raspberry pi (we set id, passward for using SSH before).
-<img src="https://user-images.githubusercontent.com/81483791/188982070-ff022595-18c6-4a7a-8090-12c4f5ec2d60.png"  width="400" height="300"/>
-- Execute VNC viewer.
-
-We got this error "The connection was refused by the host computer”
-
-It can be solved VNC → Enable (for using VNC viewer).
-
-1. WEB control
-
-For WEB control to Donkeycar, we have to change interface options.
-
-`sudo raspi-config`         
-
-<img src="https://user-images.githubusercontent.com/81483791/188982658-c4d246f0-c232-4fcd-b4d5-585ee1f20e8a.png"  width="400" height="300"/>
-<img src="https://user-images.githubusercontent.com/81483791/188982723-51f834f4-b2db-4736-a63a-034f4f7b6e4e.png"  width="400" height="300"/>
-- Legacy Camera  → Enable
+<img src="image/1.png" width="400" height="300">
     
-- SSH → Enable
+3. select custom<br>
+
+<img src="image/2.png" width="400" height="300">
+
+    
+4. upload [2021-12-02-raspios-buster-armhf-lite.zip]<br>
+
+<img src="image/3.png" width="400" height="300">
+    
+    
+5. select ‘setting’ and do like this
+    <br>
+
+<img src="image/4.png" width="400" height="600">
+    
+
+‘Host name’ represent your RPI user name
+
+‘SSH’ enables you to connect RPI in other computer. It enables you use RPI without display monitor.
+
+‘Wireless LAN’ To use RPI in your laptop, you have the same network with RPI, laptop.
+
+1. Select your storage, and press ‘write’ to write down [2021-12-02-raspios-buster-armhf-lite.zip](https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2021-12-02/2021-12-02-raspios-buster-armhf-lite.zip) in  your RPI OS.
+
+<br>
+
+<img src="image/5.png" width="400" height="300">
+
+6. If all installation completed, put your sd card in raspberry pi.
+
+7. coneect the power cable, and HDMI cable to check your RPI IP adress.
+
+### Install Putty
+
+To connect your raspberry pi with your computer, you have to install putty in your lap top.
+
+@[https://www.putty.org/](https://www.putty.org/)
+
+download putty in your laptop, and opertate putty.
+
+Type your Rpi IP adress in ‘Host Name’
+
+<br>
+
+<img src="image/6.png" width="400" height="400">
+
+## Install requirements for Donkey car.
+
+Now, your RPI is connected with your laptop. You can type command in putty to send message to RPI.
+
+Type thes to install requirements for Donkey car in your RPI 
+
+`raspberry pi`
+
+1. Update&Upgrade RP
+
+```jsx
+sudo apt-get update --allow-releaseinfo-change
+sudo apt-get upgrade
+```
+
+2. Setting
+
+```jsx
+sudo raspi-config
+```
+
+<br>
+
+<img src="image/7.png" width="400" height="300">
+
+interfacing - camera
+
+- 2. `interfacing` → `camera`  enable
+- 2. `interfacing` → `ssh` enable
+- 2. `interfacing` → `i2c` enable
+- 6. `advanced options` → `expand filesystem` enable
+
+3. Install requirements
+
+```jsx
+sudo apt-get install build-essential python3 python3-dev python3-pip python3-virtualenv python3-numpy python3-picamera python3-pandas python3-rpi.gpio i2c-tools avahi-utils joystick libopenjp2-7-dev libtiff5-dev gfortran libatlas-base-dev libopenblas-dev libhdf5-serial-dev libgeos-dev git ntp
+```
+
+```jsx
+sudo apt-get install libilmbase-dev libopenexr-dev libgstreamer1.0-dev libjasper-dev libwebp-dev libatlas-base-dev libavcodec-dev libavformat-dev libswscale-dev libqtgui4 libqt4-testpython3 -m virtualenv -p python3 env --system-site-packages
+echo "source ~/env/bin/activate" >> ~/.bashrc
+source ~/.bashrc
+```
+
+```jsx
+cd ~
+mkdir projects
+cd projects
+```
+
+```jsx
+git clone https://github.com/autorope/donkeycar
+cd donkeycar
+git checkout main
+pip install -e .[pi]
+pip install https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.2.0/tensorflow-2.2.0-cp37-none-linux_armv7l.whl
+```
+
+```jsx
+sudo apt install python3-opencv
+```
+
+```jsx
+python -c "import cv2"
+```
+
+4. Install diplay
+
+```jsx
+cd ~
+git clone https://github.com/waveshare/pi-display
+cd pi-display
+sudo ./install.sh
+```
+
+```jsx
+sudo pip3 install flask
+```
+
+```jsx
+cd pidisplay
+sudo vi display_server.py
+```
+<br>
+
+
+5. change line8  
+
+**.utils** to **utils**
+<details>
+  <summary>displya_server.py</summary>
+<div markdown="1">
+    
+    import threading
+    import Adafruit_SSD1306
+    import time
+    import PIL.Image
+    import PIL.ImageFont
+    import PIL.ImageDraw
+    from flask import Flask
+    from utils import ip_address, cpu_usage, memory_usage, disk_usage, temp
+    from pidisplay import ads1115
+    from pidisplay import ina219
+    import os
    
-- VNC → Enable (for using VNC viewer)
-   
+ </details>   
 
-If you have picamera error, change Legacy Camera → enable .
+ <br>
+6. reboot  
 
-But we also have other problem to using Donkeycar.    
-`Traceback (most recent call last):
-  File "/home/lambo/mycar/manage.py", line 717, in <module>
-    drive(cfg, model_path=args['--model'], use_joystick=args['--js'],
-  File "/home/lambo/mycar/manage.py", line 525, in drive
-    steering_controller = PCA9685(cfg.STEERING_CHANNEL, cfg.PCA9685_I2C_ADDR, busnum=cfg.PCA9685_I2C_BUSNUM)
-  File "/home/lambo/projects/donkeycar/donkeycar/parts/actuator.py", line 30, in __init__
-    self.pwm = Adafruit_PCA9685.PCA9685(address=address)
-  File "/home/lambo/env/lib/python3.9/site-packages/Adafruit_PCA9685/PCA9685.py", line 74, in __init__
-    self._device = i2c.get_i2c_device(address, **kwargs)
-  File "/home/lambo/env/lib/python3.9/site-packages/Adafruit_GPIO/I2C.py", line 63, in get_i2c_device
-    busnum = get_default_bus()
-  File "/home/lambo/env/lib/python3.9/site-packages/Adafruit_GPIO/I2C.py", line 55, in get_default_bus
-    raise RuntimeError('Could not determine default I2C bus for platform.')
-RuntimeError: Could not determine default I2C bus for platform.`    
-For solve this problem, I tried next things.
-
-- Change Adafruit_GPIO script.
-
-one workaround is edit this file:
-
-/usr/local/lib/python3.9/dist-packages/Adafruit_GPIO/Platform.py
-
-Search:
-
-elif match.group(1) == '**BCM2835**':
-
-replace it with:
-
-elif match.group(1) == '**BCM2711**':
-
-- uninstall Adafruit_GPIO & re install Adafruit_GPIO
-
-`sudo pip3 uninstall Adafruit-PureIO`
-`sudo pip3 install Adafruit-PureIO`
-
-But we can’t solve this problem.
-
-And also we can't connect web control **https://our raspberry pi ip:8887**
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-2022.09.07
-
-![1](https://user-images.githubusercontent.com/81306023/188978782-2fbd44d1-cc72-4eab-a2fb-841dd2d4e82b.png)
-Like yesterday, Joypad was well connected with RB Pi, but It didn't work with servo or motor in Jetracer.
-
-we assume that problem was not software, but hardware.
-we reassembled the jet racer, but motor still doesn't work at all.
-
-After that, we found code from rasberrypi / config.py
-which is 
-```
-Joystick_mode = 'xbox'
-```
-
-I've follow the guidline in jetracer wiki again.
-.
-![4](https://user-images.githubusercontent.com/81306023/188978874-905d92ec-5740-4c68-bc5b-d38bc846f860.PNG)
-.
-![5](https://user-images.githubusercontent.com/81306023/188978888-7e889309-eaf2-4043-adce-6f3481513ff4.PNG)
-Or, just use the xbox gamepad in the lobby, but there was no special things.
-
-![3](https://user-images.githubusercontent.com/81306023/188978834-728736bd-f2f7-44d2-9051-1e8b0302b4fc.png)
-
-After that, we found that Error about 'PCA9685' which there is no driver for 'servo' 
-
-to solve, we codded below.
-
-![2](https://user-images.githubusercontent.com/81306023/188978818-c4ed193f-ed97-48e4-8539-7bd4284d3abe.png)
-
-
-
-</details>
-
-
-<details markdown="1">
-<summary>9/8</summary>
-
-There were so many versions of Rasberry pi,
-Today, we planned that rather than down-grade the version of RPI4, watch one more guideline, and install the proper software.
-[DONKEY CAR]: <[https://docs.donkeycar.com/]>
-
-```
-donkey createcar --path ~/mycar
-````
-
-```
-cd ~/mycar
-nano myconfig.py
-```
-
-```
-sudo usermod -aG i2c $USER
+```jsx
 sudo reboot
 ```
 
+Now, you can see your IP through display.
 
+7. Fix your Raspberrypi address
+
+```jsx
+cd ~
+sudo vi /etc/dhcpcd.conf
 ```
-sudo i2cdetect -r -y 1
+
+add below line at the end of code.
+
+```jsx
+interface wlan0
+static ip_address="your IP Address"
+static routers="your IP address, but end is 1"
 ```
 
 
+<details>
+  <summary>dhcpcd.conf (in my case)</summary>
+<div markdown="1">
+    
+    ~
+    # A list of options to request from the DHCP server.
+    option domain_name_servers, domain_name, domain_search, host_name
+    option classless_static_routes
+    # Respect the network MTU. This is applied to DHCP routes.
+    option interface_mtu
+    
+    # Most distributions have NTP support.
+    #option ntp_servers
+    
+    # A ServerID is required by RFC2131.
+    require dhcp_server_identifier
+    
+    # Generate SLAAC address using the Hardware Address of the interface
+    #slaac hwaddr
+    # OR generate Stable Private IPv6 Addresses based from the DUID
+    slaac private
+    
+    # Example static IP configuration:
+    #interface eth0
+    #static ip_address=192.168.0.10/24
+    #static ip6_address=fd51:42f8:caae:d92e::ff/64
+    #static routers=192.168.0.1
+    #static domain_name_servers=192.168.0.1 8.8.8.8 fd51:42f8:caae:d92e::1
+    
+    # It is possible to fall back to a static IP if DHCP fails:
+    # define static profile
+    #profile static_eth0
+    #static ip_address=192.168.1.23/24
+    #static routers=192.168.1.1
+    #static domain_name_servers=192.168.1.1
+    
+    # fallback to static profile on eth0
+    #interface eth0
+    #fallback static_eth0
+    
+    interface wlan0
+    static ip_address="192.168.0.107"
+    static routers="192.168.0.1"
+    interface wlan0
+    static ip_address="192.168.0.107"
+    static routers="192.168.0.1"
+  </details>
+  <br><br>
+
+type this to restart network
+
+```jsx
+sudo /etc/init.d/networking restart
 ```
+
+## Install Donkey car
+
+`raspberry pi`
+
+1. create donkeycar path
+
+```jsx
+donkey createcar --path ~/mycar
+```
+
+2. Install I2C board.
+
+```jsx
 sudo apt-get install -y i2c-tools
+```
+
+type this to check If i2c board is connected with your RPI
+
+```jsx
 sudo i2cdetect -y 1
 ```
---------------------------------------------------------------------------------------------
-every thing was going great to this project
-but we have a lot of time spending to solve this problem
+  <br>
 
-```
-# result must do like this
+<img src="image/8.jpg" width="400" height="300"><br>
+If I2C board is connected like this,
+
+you can see the output
+
+```jsx
+(env) joe@joe:~ $ sudo i2cdetect -y 1
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
 00:          -- -- -- -- -- -- -- -- -- -- -- -- --
 10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-40: 40 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+30: -- -- -- -- -- -- -- -- -- -- -- -- 3c -- -- --
+40: 40 -- 42 -- -- -- -- -- -- -- -- -- -- -- -- --
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: 70 -- -- -- -- -- -- --
 ```
 
+※ If there’s no response like this, or more than 3 secodns to print this message, maybe your I2C board is broken. So replace your I2C board.
 
-```
-# but our result was this
-     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:          -- -- -- -- -- -- -- -- -- -- -- -- --
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- --
-```
+3. Time to operate Donkey car! 
 
-it means that our connection between servo and RPI doesn't match.
+`(Web Control)`
 
-
-</details>
-
-
-
-<details markdown="1">
-<summary>9/12</summary>
-
-<img src="https://user-images.githubusercontent.com/81306023/189630289-fcf25fd8-0032-4792-8fd9-b3200305baf9.jpg"  width="700" height="700"/>
-
-We assume that connection error was not for driver, but for hardware, so we changed only the board(not the piracer, not the rasberry pi), and solve the problem.
-All the process was well running, and we can operate the piracer forward or backward.
-
-
-Also, we want to customize the key between joypad and Piracer,
-So, we have to create joystick creator wizard to type
-
-```
+```jsx
+source ~/env/bin/activate
 cd ~/mycar
-donkey createjs
+python manage.py drive
 ```
 
-after the process, I completed my settings like this
-<img src="https://user-images.githubusercontent.com/81306023/189642084-c931e215-f3a6-4525-af50-b3a9228a5898.png"  width="700" height="400"/>
+go to <your raspberry pi ip adress>:8887
 
+In my case it was `192.168.0.107:8887`
 
+`(Joypad Control)`
 
+```jsx
+source ~/eng/bin/activate
+cd ~/mycar
+python manage.py drive --js
+```
 
-P.S
-There was unexpected issue in cable. so always be careful!
+Connect your USB dongle and joypad which was included in Pi-Racer Box.
 
-<img src="https://user-images.githubusercontent.com/81306023/189629930-1a6afa75-1e7e-431e-9ef7-b43994ea8365.jpg"  width="400" height="300"/>
+If there’s an error, make sure your hardware setting.
 
-</details>
+(for example, you didn’t connect Camera wire with Raspberry pi / your I2C board is broken..)

@@ -18,3 +18,4 @@ SEA:ME 프로그램에선 CAN, D-Bus, QT, Embedded Linux와 같이 실제 차량
 
 [Project 3 : Embedded Linux / Custom OS 개발](https://github.com/jun-yub-kim/SEA-ME/tree/master/Project3)
 
+[Project 4 : PDC(Park Distance Control) 개발](https://github.com/jun-yub-kim/SEA-ME/tree/master/Project4)
