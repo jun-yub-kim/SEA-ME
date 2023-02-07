@@ -1,3 +1,9 @@
+<div align="center">
+<video width="320" height="240" controls>
+  <source src="Yocto.mp4" type="mp4">
+</video>
+</div>
+
 # Intro
 
 Third project is making an Operating System for Raspberry Pi 4.
