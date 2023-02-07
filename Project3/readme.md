@@ -1,7 +1,7 @@
 <div align="center">
-<video width="320" height="240" controls>
-  <source src="Yocto.mp4" type="mp4">
-</video>
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="Yocto.gif" alt="Yocto" width="600px" height="338px">
+  </a>
 </div>
 
 # Intro
