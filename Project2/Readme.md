@@ -1,3 +1,9 @@
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="dashboard.gif" alt="dashboard" width="600px" height="338px">
+  </a>
+</div>
+
 # Intro
 
 Second project is making digital instrument cluster of ‘PiRacer’.
