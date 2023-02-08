@@ -1,28 +1,132 @@
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="PDC.gif" alt="dashboard" width="331px" height="336px">
+  </a>
+</div>
+<br><br><br>
+
 # Project 4
 
 
-<div align="center">
-<img src="image/SRF08.jpg" width="400" height="300">
-</div>
-<br>
+
 I got SRF 08 ultra sonic sensor.
 
-Unfortunately, there’s no guideline about SF08, But I guess there would no difference between SRF and other ultrasonic sensor.
+Unfortunately, there’s no guideline about SRF08, But I guess there would no difference between SRF and other ultrasonic sensor.
 
 So I started just connect this sensor to Rpi, and operate that.
 
-and……….
+I can find that SRF08 uses SDA/SCL to send / recive data from raspberrypi
 
-As a result. I finished Project 4.
+Below is pinmap
 
-<div align="center">
-<img src="image/rp2_pinout.png" width="600" height="350">
+<br><br><br><br>
+
+<div  align="center">
+<img src="image/SRF08.jpg" width="400" height="300"> <img src="image/rp2_pinout.png" width="500" height="300">
 </div>
 <br>
 
+
+<div  align="center">
+Connect like this
+<br><br>
+
+| SRF08 | Raspberrypi |
+| --- | --- |
+| 5V | 5V PWR |
+| SDA | GPIO2 |
+| SCL | GPIO3 |
+| Nicht anschlieben | X |
+| GND | GND |
+
+
 ※ SDA / SCL can be Digital pin in Arduino<br><br>
+</div>
+<br>
+
+
+# Code
+
+To operate SRF-08
+
+```
+#include <iostream>
+#include <cstdlib>
+#include <linux/i2c-dev.h>
+#include <fcntl.h>
+#include <cstring>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <ctime>
+
+using namespace std;
+
+void Mysleep(int a)
+{
+    clock_t start_clk = clock();
+    
+    a--;
+    while(1) {
+        if ((clock() - start_clk) / CLOCKS_PER_SEC > a) break;
+        }
+
+}
+
+int main(int argc, char **argv)
+{
+    cout <<"초음파 센서 프로그램 가동" << endl;    
+    
+    while(1){
+    
+    int address = 0x70;
+    unsigned char buf[10];
+    int fd = open("/dev/i2c-1", O_RDWR); // O_RDWR = open for reading and writing
+    ioctl(fd, I2C_SLAVE, address);
+        
+    buf[0] = 0;
+    buf[1] = 81;
+    
+    write(fd, buf, 2);
+    
+    usleep(750000);
+    
+    write(fd, buf, 1);
+    
+    read(fd, buf, 4);
+    
+    
+    buf[0] = 0;
+    
+    unsigned char highByte = buf[2];
+    unsigned char lowByte = buf[3];
+    unsigned int result = (highByte <<8) + lowByte;			// Calculate range
+    cout <<"Range was: " << result << endl;
+    
+    
+    	Mysleep(0.1);
+    }
+
+}
+```
+<details>
+  <summary>
+How to compile, operate (in Linux)</summary>
+<div markdown="1">
+    
+    1. make this sonic.cpp file using something like "VIM"
+    
+    2. Type "g++ mysonic.cpp -o sonic" to compile 
+    
+    3. Type "./sonic" to operate
+
+  </details>
+<br>
 
 # OPEN CV
+
+If your camera doesn't work in QT, consider to install Open CV
 
 Open CV is a necessary program to process media file from camera.
 
