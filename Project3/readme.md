@@ -638,11 +638,12 @@ core-image-python.bb
 Same with previous step
 <br><br><br>
 </details>
+<br><br><br>
 
 ## Build QT exe (Only for example file version)
 <details>
-<summary>Build QT exe (Only for example file version)
-<div markdown="1">
+  <summary>Build QT exe (Only for example file version)</summary>
+  <div markdown="1">
 
 1. Download met-QT5
 
@@ -733,8 +734,9 @@ cd /usr/share/examples/opengl/hellowindow
 
 ./hellowindow -platform eglfs
 ```
-</details>
 
+</details>
+<br><br><br>
 
 ## Build QT exe (Add  custom QT file version)
 <details>
