@@ -925,7 +925,7 @@ ROOTFS_POSTPROCESS_COMMAND += "local_autologin; "
 ## Auto start program after loading
 <br>
 <details>
-  <summary>Auto Login</summary>
+  <summary>Auto start program after loading</summary>
   <div markdown="1">
 <br><br>
 recipe_what_you_gonna_build.bb
