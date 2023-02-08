@@ -40,7 +40,8 @@ Connect like this
 | GND | GND |
 
 
-※ SDA / SCL can be Digital pin in Arduino<br><br>
+※ SDA / SCL can be Digital pin in Arduino<br>
+※ You might need to solder SRF-08<br>
 </div>
 <br>
 
