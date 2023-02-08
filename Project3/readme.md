@@ -638,3 +638,483 @@ core-image-python.bb
 Same with previous step
 <br><br><br>
 </details>
+
+## Build QT exe (Only for example file version)
+<details>
+<summary>Build QT exe (Only for example file version)
+<div markdown = "2">
+
+1. Download met-QT5
+
+```jsx
+cd ~/yocto/kirkstone
+git clone -b kirkstone https://github.com/meta-qt5/meta-qt5
+```
+
+2. Add new layer at local.conf , bblayers.conf
+
+```jsx
+cd ~/yocto/kirkstone/**Projectname**/conf
+vim local.conf
+```
+
+Add this line
+
+local.conf
+
+```jsx
+CORE_IMAGE_EXTRA_INSTALL:append = "qtbase-examples"
+DISTRO_FEATURES:remove = "x11 wayland vulkan"
+```
+
+```jsx
+vim bblayers.conf
+```
+
+Add this line
+
+bblayers.conf
+
+```jsx
+/home/seame-fablab/yocto/kirkstone/meta-qt5 \
+```
+<br>
+3. Make .bbappend file
+
+```jsx
+cd ~yocto/kirkstone/poky/meta-poky
+mkdir -p recipes-qt/qt5
+cd recipes-qt/qt5
+vim qtbase_%.bbappend
+```
+
+Add this line
+
+```jsx
+PACKAGECONFIG:append = " examples gles2 eglfs"
+PACKAGECONFIG:remove = "tslib"
+```
+<br>
+4. Build
+
+```jsx
+cd ~/yocto/kirkstone/poky
+source oe-init-build-env ../raspberrypi4
+bitbake -c cleanall core-image-minimal
+bitbake core-image-minimal
+```
+<br>
+5. Check setting, Check example code
+
+5-1
+
+Make sure chage below line located in boot/config.txt in your custom sdcard
+
+```jsx
+## dtoverlay=vc4-kms-v3d
+to
+dtoverlay=vc4-fkms-v3d-pi4
+```
+
+5-2
+
+Simply you can find example code in root folder
+
+Go to root, and search where hellowindow direcotry is. In my case ‘usr/share/examples/opengl/hellowindow’
+<br>
+<br><br>
+6.
+Boot Raspberrypi4, Operate sample code
+
+`Raspberryp4` 
+
+```jsx
+cd /usr/share/examples/opengl/hellowindow
+
+./hellowindow -platform eglfs
+```
+</details>
+
+
+## Build QT exe (Add  custom QT file version)
+<details>
+  <summary>Build QT exe (Add custom QT file version)</summary>
+  <div markdown="1">
+<br>
+1. Create custom layer
+
+```jsx
+cd ~/yocto/kirkstone/poky
+source oe-init-build-env ../raspberrypi4
+cd ..
+bitbake-layers create-layer meta-myqt
+```
+<br>
+2. Add new layer
+
+```jsx
+cd ~/yocto/kirkstone/poky/projectname/conf
+vim bblayers.conf
+```
+
+Add following line:
+
+```jsx
+/home/seame-fablab/yocto/kirkstone/meta-myqt \
+```
+<br>
+3. Write a new image recipe
+
+```jsx
+cd ~/yocto/poky/build/meta-myqt
+mkdir -p recipes-core/images
+cd recipes-core/images
+vim basic-qt5-image.bb
+```
+
+add following line
+
+```jsx
+SUMMARY = "A basic Qt5 dev image"
+
+require recipes-core/images/core-image-minimal.bb 
+
+QT_BASE = " \
+    qtbase \
+    qtbase-dev \
+    qtbase-mkspecs \
+    qtbase-plugins \
+    qtbase-tools \
+"
+ 
+QT_PKGS = " \
+    qt3d \
+    qt3d-dev \
+    qt3d-mkspecs \
+    qtcharts \
+    qtcharts-dev \
+    qtcharts-mkspecs \
+    qtconnectivity-dev \
+    qtconnectivity-mkspecs \
+    qtquickcontrols2 \
+    qtquickcontrols2-dev \
+    qtquickcontrols2-mkspecs \
+    qtdeclarative \
+    qtdeclarative-dev \
+    qtdeclarative-mkspecs \
+    qtgraphicaleffects \
+    qtgraphicaleffects-dev \
+"
+ 
+IMAGE_INSTALL += " \
+    ${QT_BASE} \
+    ${QT_PKGS} \
+"
+ 
+export IMAGE_BASENAME = "basic-qt5-image"
+```
+<br>
+4. Write additional package recipe
+
+```jsx
+cd ~/yocto/kirkstone/meta-myqt/recipes-example/example
+mv example_0.1.bb qtbase_git.bbappend
+vim qtbase_git.bbappend
+```
+
+Edit file to following line:
+
+```jsx
+SUMMARY = "bitbake-layers recipe"
+DESCRIPTION = "Recipe created by bitbake-layers"
+LICENSE = "MIT"
+ 
+PACKAGECONFIG:append = " eglfs fontconfig gles2"
+DEPENDS += "userland"
+```
+<br>
+5. Build
+
+```jsx
+cd ~/yocto/kirkstone/poky
+source oe-init-build-env ../raspberrypi4
+bitbake -c cleanall core-image-minimal
+bitbake core-image-minimal
+bitbake basic-qt5-image
+bitbake basic-qt5-image -c populate_sdk
+```
+<br>
+6. Install SDK
+
+Check SDK directory at
+
+```jsx
+yocto/kirkstone/projectname/tmp/deploy/sdk
+```
+<br>
+7. Setup QT
+
+[Adding Kits](https://doc.qt.io/qtcreator/creator-targets.html)
+
+refer this to add kit.
+
+tools → Options
+
+(If there’s no Options, Tools → external →configure)
+
+compilers: 
+
+/opt/poky/4.0.6/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux/arm-poky-linux-g++
+
+debuggers:
+
+/opt/poky/4.0.6/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux/arm-poky-linux-gdb
+
+CMake:64-pokysdk-linux/usr/bin/cmake
+
+QtVersion:
+
+/opt/poky/4.0.6/sysroots/x86_64-pokysdk-linux/usr/bin/qmake
+<br><br><br>
+8. Move it to SD card
+
+```jsx
+sudo cp untitled /media/seame-fablab/root/usr
+```
+
+</details>
+<br><br><br>
+
+## Auto Login
+<br>
+<details>
+  <summary>Auto Login</summary>
+  <div markdown="1">
+local.conf
+
+```
+IMAGE_FSTYPES = "rpi-sdimg"
+
+DISTRO_FEATURES:append = " systemd"
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
+VIRTUAL-RUNTIME_init_manager = "systemd"
+VIRTUAL-RUNTIME_initscripts = ""
+```
+
+recipe_what_you_gonna_build.bb
+
+```jsx
+**Type_var_name** ?= " \
+    ${IMAGE_ROOTFS}${systemd_system_unitdir}/serial-getty@.service \
+    ${IMAGE_ROOTFS}${systemd_system_unitdir}/getty@.service \
+"
+
+local_autologin () {
+    sed -i -e 's/^\(ExecStart *=.*getty \)/\1--autologin root /' ${**Type_var_name**}
+}
+
+ROOTFS_POSTPROCESS_COMMAND += "local_autologin; "
+```
+
+</details>
+
+<br><br><br>
+
+## Auto start program after loading
+<br>
+<details>
+  <summary>Auto Login</summary>
+  <div markdown="1">
+<br><br>
+recipe_what_you_gonna_build.bb
+
+```jsx
+IMAGE_INSTALL:append = " \
+    qt5-env \
+```
+
+add this two bbfile to somewhere
+
+qt5-env.bb
+
+```jsx
+SUMMARY = "Add Qt5 bin dir to PATH"
+
+LICENSE = "CLOSED"
+
+SRC_URI = "file://qt5-env.sh"
+
+PR = "r1"
+
+S = "${WORKDIR}"
+
+do_install() {
+    install -d ${D}${sysconfdir}/profile.d
+    install -m 0755 qt5-env.sh ${D}${sysconfdir}/profile.d
+}
+
+FILES_${PN} = "${sysconfdir}"
+```
+
+qt5-env.sh
+
+```jsx
+#!/bin/sh
+
+# export QT_LOGGING_RULES=qt.qpa.*=true # Optional for logging
+#export QT_QPA_EGLFS_KMS_CONFIG=/etc/kms.conf
+export QT_QPA_EGLFS_INTEGRATION=kms
+# export QT_QPA_EGLFS_INTEGRATION=eglfs_kms # kms doesn't work on boot2qt but eglfs_kms
+export QT_QPA_PLATFORM=eglfs
+export QT_QPA_EGLFS_KMS_ATOMIC=1
+export XDG_RUNTIME_DIR=/run/user/0
+
+#ip link set can0 up type an birtare 5000
+#cd usr/bin
+#simple
+# or 
+/usr/bin/colidingmice
+**# this can be a name of auto start program**
+```
+
+</details>
+<br><br><br>
+
+## Change boot logo
+
+<details>
+  <summary>Change boot logo</summary>
+  <div markdown="1">
+  refer this <br>
+https://github.com/hamzamac/meta-splash](https://github.com/hamzamac/meta-splash
+</details>
+
+<br><br><br>
+### It is final!
+## Dash board on Yocto!
+
+<details>
+  <summary>Dashboard on Yocto!</summary>
+  <div markdown="1">
+In the second project, I designed Dasboard using QT.<br>
+Now we installed all the requirements.<br>
+We can add Dashboard to our own OS!<br>
+Download this QT file,
+<a href="https://github.com/jun-yub-kim/SEA-ME/tree/master/Project2">Dashbaord_QT_file</a>
+<br>and make custom .bb file to append this.
+<br><br>
+<img src="image/dashboard_file.png" width="600" height="300">
+<br>add dashboard like this.<br>
+<img src="image/dashboard_bb.png" width="600" height="300">
+
+
+make dashboard.bbfile
+
+`dashboard.bb`
+
+```jsx
+DESCRIPTION = "QT application"
+
+LICENSE = "CLOSED"
+inherit qmake5
+DEPENDS = " qtbase qtquickcontrols2"
+
+  
+SRC_URI += "file://dashboard.pro.user \
+            file://qrc_dashboard.cpp \
+            file://dashboard.pro \
+            file://dashboard.qrc \
+            file://images/fuel-icon.png \
+            file://images/temperature-icon.png \
+            file://qml/dashboard.qml \
+            file://qml/DashboardGaugeStyle.qml \
+            file://qml/IconGaugeStyle.qml \
+            file://qml/TachometerStyle.qml \
+            file://qml/TurnIndicator.qml \
+            file://qml/ValueSource.qml \
+            file://fonts/DejaVuSans.ttf \              
+            file://main.cpp"
+S = "${WORKDIR}"
+
+do_configure() {
+    qmake ${S}/dashboard.pro
+}
+
+do_install(){
+    install -d ${D}${bindir}
+    install -m 0755 dashboard ${D}${bindir}
+}
+```
+
+append it to your bitbake file
+
+In my case, I add it to my custom bb, basic-qt5-image.bb
+
+`basic.bb`
+
+```jsx
+SUMMARY = "A basic Qt5 dev image"
+
+require recipes-core/images/core-image-minimal.bb 
+
+IMAGE_FEATURES += "splash"
+
+IMAGE_INSTALL:append = " \
+    dashboard \
+    qt5-env \
+    psplash \
+"
+
+QT_BASE = " \
+    qtbase \
+    qtbase-dev \
+    qtbase-mkspecs \
+    qtbase-plugins \
+    qtbase-tools \
+"
+
+ 
+QT_PKGS = " \
+    qt3d \
+    qt3d-dev \
+    qt3d-mkspecs \
+    qtcharts \
+    qtcharts-dev \
+    qtcharts-mkspecs \
+    qtconnectivity-dev \
+    qtconnectivity-mkspecs \
+    qtquickcontrols \
+    qtquickcontrols2 \
+    qtquickcontrols2-dev \
+    qtquickcontrols2-mkspecs \
+    qtdeclarative \
+    qtdeclarative-dev \
+    qtdeclarative-mkspecs \
+    qtgraphicaleffects \
+    qtgraphicaleffects-dev \
+    qtx11extras \
+    qtquickcontrols \
+"
+ 
+IMAGE_INSTALL += " \
+    ${QT_BASE} \
+    ${QT_PKGS} \
+"
+
+Auto_start ?= " \
+    ${IMAGE_ROOTFS}${systemd_system_unitdir}/serial-getty@.service \
+    ${IMAGE_ROOTFS}${systemd_system_unitdir}/getty@.service \
+"
+
+local_autologin () {
+    sed -i -e 's/^\(ExecStart *=.*getty \)/\1--autologin root /' ${Auto_start}
+}
+
+ROOTFS_POSTPROCESS_COMMAND += "local_autologin; "
+ 
+export IMAGE_BASENAME = "basic-qt5-image"
+```
+<br>
+Finally we are done.<br>
+Build it!<br>Eject it!<br>Run it!
+</details>
